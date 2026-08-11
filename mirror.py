@@ -7,8 +7,11 @@
 # ///
 """Update ruff-pre-commit to the latest version of ruff-odoo (Vauxoo fork).
 
-Tags use the `odoo-v` prefix so they never collide with the `v*` tags
-inherited from upstream astral-sh/ruff-pre-commit.
+Tags are bare versions (e.g. `0.16.2.1`), matching upstream astral-sh/ruff's
+current release-tag style (no `v` prefix). No `odoo-` prefix either: these
+tags always have 4 dot-separated components (ruff-odoo's x.y.z.w scheme),
+which can never collide with the 3-component tags inherited from upstream
+astral-sh/ruff-pre-commit.
 """
 
 import re
@@ -35,9 +38,9 @@ def main():
         if subprocess.check_output(["git", "status", "-s"]).strip():
             subprocess.run(["git", "add", *paths], check=True)
             subprocess.run(["git", "commit", "-m", f"Mirror: {version}"], check=True)
-            subprocess.run(["git", "tag", f"odoo-v{version}"], check=True)
+            subprocess.run(["git", "tag", f"{version}"], check=True)
         else:
-            print(f"No change odoo-v{version}")
+            print(f"No change {version}")
 
 
 def get_all_versions() -> list[Version]:
@@ -69,10 +72,8 @@ def process_version(version: Version) -> typing.Sequence[str]:
     def replace_readme_md(content: str) -> str:
         # `ruff-odoo` may use four-component versions (e.g. 0.16.2.1) for
         # fork-only re-releases between upstream syncs, hence `\d+(?:\.\d+)+`.
-        content = re.sub(r"rev: odoo-v\d+(?:\.\d+)+", f"rev: odoo-v{version}", content)
-        content = re.sub(
-            r'rev = "odoo-v\d+(?:\.\d+)+"', f'rev = "odoo-v{version}"', content
-        )
+        content = re.sub(r"rev: \d+(?:\.\d+)+", f"rev: {version}", content)
+        content = re.sub(r'rev = "\d+(?:\.\d+)+"', f'rev = "{version}"', content)
         return re.sub(
             r"/ruff-odoo/\d+(?:\.\d+)+\.svg", f"/ruff-odoo/{version}.svg", content
         )

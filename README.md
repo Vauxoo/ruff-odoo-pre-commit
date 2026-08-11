@@ -12,8 +12,10 @@ group on top of all upstream rules.
 Distributed as a standalone repository to enable installing `ruff-odoo` via prebuilt wheels from
 [PyPI](https://pypi.org/project/ruff-odoo/).
 
-Note: this fork uses `odoo-v*` tags (e.g. `odoo-v0.16.2.1`). The `v*` tags are inherited from
-upstream `astral-sh/ruff-pre-commit` and install the upstream `ruff` package instead.
+Note: this fork uses bare version tags (e.g. `0.16.2.1`, no `v` prefix, matching upstream
+astral-sh/ruff's current release-tag style). The `v*`-prefixed tags in this repo's history are
+inherited from upstream `astral-sh/ruff-pre-commit` and install the upstream `ruff` package
+instead.
 
 ### Using ruff-odoo with pre-commit
 
@@ -23,7 +25,7 @@ To run the linter and formatter via pre-commit, add the following to your `.pre-
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: odoo-v0.16.2.1
+  rev: 0.16.2.1
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -37,7 +39,7 @@ To enable lint fixes, add the `--fix` argument to the lint hook:
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: odoo-v0.16.2.1
+  rev: 0.16.2.1
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -53,7 +55,7 @@ When using inline YAML lists, quote arguments that contain commas:
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: odoo-v0.16.2.1
+  rev: 0.16.2.1
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -66,7 +68,7 @@ To avoid running on Jupyter Notebooks, remove `jupyter` from the list of allowed
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: odoo-v0.16.2.1
+  rev: 0.16.2.1
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -92,7 +94,7 @@ equivalent to the `.pre-commit-config.yaml` configuration:
 ```toml
 [[repos]]
 repo = "https://github.com/vauxoo/ruff-odoo-pre-commit"
-rev = "odoo-v0.16.2.1" # ruff-odoo version.
+rev = "0.16.2.1" # ruff-odoo version.
 hooks = [
   # Run the linter.
   { id = "ruff-check", args = ["--fix"], types_or = ["python", "pyi"] },
@@ -107,7 +109,7 @@ See the section above on pre-commit for guidance on hook order when using `--fix
 ## Releasing
 
 New `ruff-odoo` versions on PyPI are picked up automatically by the scheduled `main` workflow,
-which runs `mirror.py`: it bumps `pyproject.toml`/`README.md`, commits, tags `odoo-v<version>`,
+which runs `mirror.py`: it bumps `pyproject.toml`/`README.md`, commits, tags `<version>`,
 and creates a GitHub release. It can also be run manually via `workflow_dispatch` or locally with
 `uv run --no-project mirror.py` followed by `git push origin main --tags`.
 
