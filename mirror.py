@@ -5,7 +5,11 @@
 #   "urllib3==2.0.5",
 # ]
 # ///
-"""Update ruff-pre-commit to the latest version of ruff."""
+"""Update ruff-pre-commit to the latest version of ruff-odoo (Vauxoo fork).
+
+Tags use the `odoo-v` prefix so they never collide with the `v*` tags
+inherited from upstream astral-sh/ruff-pre-commit.
+"""
 
 import re
 import subprocess
@@ -31,13 +35,13 @@ def main():
         if subprocess.check_output(["git", "status", "-s"]).strip():
             subprocess.run(["git", "add", *paths], check=True)
             subprocess.run(["git", "commit", "-m", f"Mirror: {version}"], check=True)
-            subprocess.run(["git", "tag", f"v{version}"], check=True)
+            subprocess.run(["git", "tag", f"odoo-v{version}"], check=True)
         else:
-            print(f"No change v{version}")
+            print(f"No change odoo-v{version}")
 
 
 def get_all_versions() -> list[Version]:
-    response = urllib3.request("GET", "https://pypi.org/pypi/ruff/json")
+    response = urllib3.request("GET", "https://pypi.org/pypi/ruff-odoo/json")
     if response.status != 200:
         raise RuntimeError("Failed to fetch versions from pypi")
 
@@ -47,25 +51,31 @@ def get_all_versions() -> list[Version]:
 
 def get_current_version(pyproject: dict) -> Version:
     requirements = [Requirement(d) for d in pyproject["project"]["dependencies"]]
-    requirement = next((r for r in requirements if r.name == "ruff"), None)
-    assert requirement is not None, "pyproject.toml does not have ruff requirement"
+    requirement = next((r for r in requirements if r.name == "ruff-odoo"), None)
+    assert requirement is not None, "pyproject.toml does not have ruff-odoo requirement"
 
     specifiers = list(requirement.specifier)
     assert (
         len(specifiers) == 1 and specifiers[0].operator == "=="
-    ), f"ruff's specifier should be exact matching, but `{requirement}`"
+    ), f"ruff-odoo's specifier should be exact matching, but `{requirement}`"
 
     return Version(specifiers[0].version)
 
 
 def process_version(version: Version) -> typing.Sequence[str]:
     def replace_pyproject_toml(content: str) -> str:
-        return re.sub(r'"ruff==.*"', f'"ruff=={version}"', content)
+        return re.sub(r'"ruff-odoo==.*"', f'"ruff-odoo=={version}"', content)
 
     def replace_readme_md(content: str) -> str:
-        content = re.sub(r"rev: v\d+\.\d+\.\d+", f"rev: v{version}", content)
-        content = re.sub(r'rev = "v\d+\.\d+\.\d+"', f'rev = "v{version}"', content)
-        return re.sub(r"/ruff/\d+\.\d+\.\d+\.svg", f"/ruff/{version}.svg", content)
+        # `ruff-odoo` may use four-component versions (e.g. 0.16.2.1) for
+        # fork-only re-releases between upstream syncs, hence `\d+(?:\.\d+)+`.
+        content = re.sub(r"rev: odoo-v\d+(?:\.\d+)+", f"rev: odoo-v{version}", content)
+        content = re.sub(
+            r'rev = "odoo-v\d+(?:\.\d+)+"', f'rev = "odoo-v{version}"', content
+        )
+        return re.sub(
+            r"/ruff-odoo/\d+(?:\.\d+)+\.svg", f"/ruff-odoo/{version}.svg", content
+        )
 
     paths = {
         "pyproject.toml": replace_pyproject_toml,
