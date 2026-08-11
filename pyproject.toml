@@ -2,5 +2,5 @@
 name = "ruff-odoo-pre-commit"
 version = "0.0.0"
 dependencies = [
-    "ruff-odoo==0.16.2.3",
+    "ruff-odoo==0.16.2.4",
 ]
