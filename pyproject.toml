@@ -1,6 +1,6 @@
 [project]
-name = "ruff-pre-commit"
+name = "ruff-odoo-pre-commit"
 version = "0.0.0"
 dependencies = [
-    "ruff==0.16.2",
+    "ruff-odoo==0.16.2.1",
 ]
