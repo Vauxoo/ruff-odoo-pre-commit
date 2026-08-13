@@ -1,7 +1,11 @@
+# The hook ids match astral-sh/ruff-pre-commit so consumers can switch between
+# upstream and this fork by changing only `repo`/`rev`. The entry is the
+# fork's `ruff-odoo` binary (ruff-odoo >= 0.16.2.7), which never collides with
+# an upstream `ruff` installed on the same machine.
 - id: ruff-check
   name: ruff check
   description: "Run 'ruff check' for extremely fast Python linting"
-  entry: ruff check --force-exclude
+  entry: ruff-odoo check --force-exclude
   language: python
   types_or: [python, pyi, jupyter]
   args: []
@@ -12,7 +16,7 @@
 - id: ruff-format
   name: ruff format
   description: "Run 'ruff format' for extremely fast Python formatting"
-  entry: ruff format --force-exclude
+  entry: ruff-odoo format --force-exclude
   language: python
   types_or: [python, pyi, jupyter]
   args: []
@@ -24,7 +28,7 @@
 - id: ruff
   name: ruff (legacy alias)
   description: "Run 'ruff check' for extremely fast Python linting"
-  entry: ruff check --force-exclude
+  entry: ruff-odoo check --force-exclude
   language: python
   types_or: [python, pyi, jupyter]
   args: []
