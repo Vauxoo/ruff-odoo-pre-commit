@@ -1,8 +1,8 @@
 # ruff-pre-commit (Vauxoo fork — `ruff-odoo`)
 
-[![image](https://img.shields.io/pypi/v/ruff-odoo/0.16.2.11.svg)](https://pypi.python.org/pypi/ruff-odoo)
-[![image](https://img.shields.io/pypi/l/ruff-odoo/0.16.2.11.svg)](https://pypi.python.org/pypi/ruff-odoo)
-[![image](https://img.shields.io/pypi/pyversions/ruff-odoo/0.16.2.11.svg)](https://pypi.python.org/pypi/ruff-odoo)
+[![image](https://img.shields.io/pypi/v/ruff-odoo/0.16.2.12.svg)](https://pypi.python.org/pypi/ruff-odoo)
+[![image](https://img.shields.io/pypi/l/ruff-odoo/0.16.2.12.svg)](https://pypi.python.org/pypi/ruff-odoo)
+[![image](https://img.shields.io/pypi/pyversions/ruff-odoo/0.16.2.12.svg)](https://pypi.python.org/pypi/ruff-odoo)
 [![Actions status](https://github.com/vauxoo/ruff-odoo-pre-commit/workflows/main/badge.svg)](https://github.com/vauxoo/ruff-odoo-pre-commit/actions)
 
 A [pre-commit](https://pre-commit.com/) hook for [`ruff-odoo`](https://github.com/Vauxoo/ruff),
@@ -25,7 +25,7 @@ To run the linter and formatter via pre-commit, add the following to your `.pre-
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: 0.16.2.11
+  rev: 0.16.2.12
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -39,7 +39,7 @@ To enable lint fixes, add the `--fix` argument to the lint hook:
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: 0.16.2.11
+  rev: 0.16.2.12
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -55,7 +55,7 @@ When using inline YAML lists, quote arguments that contain commas:
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: 0.16.2.11
+  rev: 0.16.2.12
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -68,7 +68,7 @@ To avoid running on Jupyter Notebooks, remove `jupyter` from the list of allowed
 repos:
 - repo: https://github.com/vauxoo/ruff-odoo-pre-commit
   # ruff-odoo version.
-  rev: 0.16.2.11
+  rev: 0.16.2.12
   hooks:
     # Run the linter.
     - id: ruff-check
@@ -94,7 +94,7 @@ equivalent to the `.pre-commit-config.yaml` configuration:
 ```toml
 [[repos]]
 repo = "https://github.com/vauxoo/ruff-odoo-pre-commit"
-rev = "0.16.2.11" # ruff-odoo version.
+rev = "0.16.2.12" # ruff-odoo version.
 hooks = [
   # Run the linter.
   { id = "ruff-check", args = ["--fix"], types_or = ["python", "pyi"] },
