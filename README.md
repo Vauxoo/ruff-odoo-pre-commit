@@ -12,6 +12,9 @@ group on top of all upstream rules.
 Distributed as a standalone repository to enable installing `ruff-odoo` via prebuilt wheels from
 [PyPI](https://pypi.org/project/ruff-odoo/).
 
+Since `ruff-odoo` 0.16.2.7, the hooks invoke the fork's `ruff-odoo` binary (not `ruff`), so it
+can be installed alongside upstream Ruff on the same machine without the two colliding.
+
 Note: this fork uses bare version tags (e.g. `0.16.2.2`, no `v` prefix, matching upstream
 astral-sh/ruff's current release-tag style). The `v*`-prefixed tags in this repo's history are
 inherited from upstream `astral-sh/ruff-pre-commit` and install the upstream `ruff` package
